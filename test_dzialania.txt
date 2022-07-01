@@ -1,0 +1,86 @@
+################ RUN 1 ########################################################
+     1  podaj rozmiar tablicy (parzysta liczba) 10
+     2  float:
+     3  Suma: 10.0000009536743164062500000
+     4  Srednia: 1.0000001192092895507812500
+     5  Odchylenie standardowe: 0.1000000238418579101562500
+     6  double:
+     7  Suma: 10.0000000000000000000000000
+     8  Srednia: 1.0000000000000000000000000
+     9  Odchylenie standardowe: 0.1000000238418579101562500
+    10  float:
+    11  Suma: 10.0000000000000000000000000
+    12  Srednia: 1.0000000000000000000000000
+    13  Odchylenie standardowe: 0.1000000238418579101562500
+
+################ RUN 2 ########################################################
+     1  podaj rozmiar tablicy (parzysta liczba) 1000000
+     2  float:
+     3  Suma: 999988.8750000000000000000000000
+     4  Srednia: 0.9999888539314270019531250
+     5  Odchylenie standardowe: 0.0993242263793945312500000
+     6  double:
+     7  Suma: 1000000.0000000000000000000000000
+     8  Srednia: 1.0000000000000000000000000
+     9  Odchylenie standardowe: 0.1000000238419141845858107
+    10  float:
+    11  Suma: 1000000.0000000000000000000000000
+    12  Srednia: 1.0000000000000000000000000
+    13  Odchylenie standardowe: 0.1000000238418579101562500
+
+Przeslany kod zawiera bledy i nalezy teraz poszukac i sprawdzic co jest nie tak.
+Powyzej sa wyniki dzialania programu dla N=10 i 1000000, a ponizej kilka wskazowek.
+1. bledy numeryczne biora sie, i kumuluja w wyniku wykonywania operacji arytmrtycznych.
+Skad zatem takie same dokladnosci odchylenia std. dla obu N?
+2. float, double, itd. roznia sie miedzy soba iloscia bitow ktore zajmuja.
+Jest niemozliwe, aby ochylenia std. roznych typow mialy identyczna dokladnosc.
+3. rowniez dziwne dla mnie wydaje sie to ze sumy i srednie dla double i l. double sa tak dokladne.
+Poprawny program powinien wyprodukowac cos w stylu:
+
+N=10
+ Sums values for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 1.000000000000000000000000000000e+01
+ double precision : 9.999999999999998223643160599750e+00
+ long double pre. : 1.000000000000000000000000000000e+01
+ accurate value   : 1.000000000000000000000000000000e+01
+
+ Average values for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 1.000000000000000000000000000000e+00
+ double precision : 9.999999999999997779553950749687e-01
+ long double pre. : 1.000000000000000000000000000000e+00
+ accurate value   : 1.0
+
+ Standard deviation for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 1.000000238418579101562500000000e-01
+ double precision : 1.000000000000000333066907387547e-01
+ long double pre. : 1.000000000000000000216840434497e-01
+ accurate value   : 0.1
+
+N=1000000
+ Sums values for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 9.999983750000000000000000000000e+05
+ double precision : 9.999999999999891733750700950623e+05
+ long double pre. : 9.999999999999999984652276907582e+05
+ accurate value   : 1.000000000000000000000000000000e+06
+
+ Average values for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 9.999983906745910644531250000000e-01
+ double precision : 9.999999999999891198143586734659e-01
+ long double pre. : 9.999999999999999984821169585203e-01
+ accurate value   : 1.0
+
+ Standard deviation for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 9.932386130094528198242187500000e-02
+ double precision : 1.000000000008590961275700692568e-01
+ long double pre. : 9.999999999999938754232427923219e-02
+ accurate value   : 0.1
+
+
+Jak widać dokladnosc maleje wraz z mniejsza liczba bitow w zmiennych oraz ze
+wzrostem ilosci wykonanych operacji (dodawania w tym przypadku).
