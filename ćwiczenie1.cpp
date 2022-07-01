@@ -15,9 +15,9 @@ float suma_x = 0;
 double suma_y = 0;
 long double suma_z = 0;
 
-float średnia_x = 0;
-double średnia_y = 0;
-long double średnia_z = 0;
+float srednia_x = 0;
+double srednia_y = 0;
+long double srednia_z = 0;
 
 float odchylenie_standardowe_x = 0;
 double odchylenie_standardowe_y = 0;
@@ -37,7 +37,7 @@ void GeneratingArray(){
 
     srand (time(NULL));
 
-    int średnia_dana = 1;
+    int srednia_dana = 1;
     float odchylenie_standardowe_dane = 0.1;
     int a = 0;
     int b = 0;
@@ -55,15 +55,15 @@ void GeneratingArray(){
         }
 
         if ( a == 0){
-            x[i] = średnia_dana - odchylenie_standardowe_dane;
-            y[i] = średnia_dana - odchylenie_standardowe_dane;
-            z[i] = średnia_dana - odchylenie_standardowe_dane;
+            x[i] = srednia_dana - odchylenie_standardowe_dane;
+            y[i] = srednia_dana - odchylenie_standardowe_dane;
+            z[i] = srednia_dana - odchylenie_standardowe_dane;
             b++;
         }
         else{
-            x[i] = średnia_dana + odchylenie_standardowe_dane;
-            y[i] = średnia_dana + odchylenie_standardowe_dane;
-            z[i] = średnia_dana + odchylenie_standardowe_dane;
+            x[i] = srednia_dana + odchylenie_standardowe_dane;
+            y[i] = srednia_dana + odchylenie_standardowe_dane;
+            z[i] = srednia_dana + odchylenie_standardowe_dane;
             c++;
         }
     }
@@ -91,9 +91,9 @@ void Suma(){
 
 void Średnia(){
 
-    średnia_x = suma_x/N;
-    średnia_y = suma_y/N;
-    średnia_z = suma_z/N;
+    srednia_x = suma_x/N;
+    srednia_y = suma_y/N;
+    srednia_z = suma_z/N;
 
 }
 
@@ -126,19 +126,19 @@ void Output(){
     cout.precision(25);
     cout << "float: " << endl;
     cout << fixed << "Suma: "  << suma_x << endl;
-    cout << fixed << "Srednia: " << średnia_x << endl;
+    cout << fixed << "Srednia: " << srednia_x << endl;
     cout << fixed << "Odchylenie standardowe: " << odchylenie_standardowe_x << endl;
 
     cout.precision(25);
     cout << "double: " << endl;
     cout << fixed << "Suma: "  << suma_y << endl;
-    cout << fixed << "Srednia: " << średnia_y << endl;
+    cout << fixed << "Srednia: " << srednia_y << endl;
     cout << fixed << "Odchylenie standardowe: " << odchylenie_standardowe_y << endl;
 
     cout.precision(25);
     cout << "float: " << endl;
     cout << fixed << "Suma: "  << suma_z << endl;
-    cout << fixed << "Srednia: " << średnia_z << endl;
+    cout << fixed << "Srednia: " << srednia_z << endl;
     cout << fixed << "Odchylenie standardowe: " << odchylenie_standardowe_z << endl;
 
 }
