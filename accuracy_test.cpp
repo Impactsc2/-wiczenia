@@ -53,31 +53,50 @@ void GeneratingArray(){
     long double odchylenie_standardowe_dane = 0.1;
     int a = 0;
     int b = 0;
-    int c = 0;
+    // Wysttarczy jeden licznik, c zawsze wynosi N-b. kiedy przestajemy
+    // inkrementowac b, c zawsze bedzie rowne N/2
+//     int c = 0;
+    int znak = 1;
 
     for (int i = 0 ; i < N ; i++){
+        // Ta instrukcja nic nie robi
+//         a = rand()%2;
 
-        a = rand()%2;
-
+        a=0;
         if (b == N/2){
             a = 1;
-        }
-        if (c == N/2){
-            a = 0;
-        }
+        }//else{
+//         if (c == N/2){
+//             a = 0;
+//         }
 
+        // Powyzsze mozna jeszcze bardziej zwiezle zapisac jako (ternary operator)
+//         a = (b == N/2) ? 1 : 0;
+
+        /* jezli mamy tylko dwie opcje, warto uzyc domyslnie jednej a druga
+         * wstawic blok 'if'. Instrukcja else jest wykonaniem skoku bezwarunkwego
+         * jezeli test w 'if' jest false. Taka instrukcja sie nie optymalizuje
+         * zbyt dobrze (czytaj: wcaje), wiec kod dzial szybciej bez bloku else.
+         * Patrzac z punktu widzenia wydajnosci nalezy tak konstruowac bloki if/else,
+         * aby ten kod ktory oczekujemy ze bedzie sie czesciej wykonywal byl w bloku 'if'
+         */
+        znak = 1;
         if ( a == 0){
-            x[i] = srednia_dana - odchylenie_standardowe_dane;
-            y[i] = srednia_dana - odchylenie_standardowe_dane;
-            z[i] = srednia_dana - odchylenie_standardowe_dane;
+            znak = -1;
             b++;
         }
-        else{
-            x[i] = srednia_dana + odchylenie_standardowe_dane;
-            y[i] = srednia_dana + odchylenie_standardowe_dane;
-            z[i] = srednia_dana + odchylenie_standardowe_dane;
-            c++;
-        }
+//         else{
+//             znak = 1;
+//             c++;
+//         }
+        /* Nalezy unikac powtarzania sie kodu. Jezeli gdzies wystepuja
+         * powtorzenia, to znak ze mozna tam zastosowac jaka optymalizacje
+         * algorytmu albo wyodrebnic kod do funkcji. Kompilator zazwyczaj bedzie
+         * w stanie lepiej zoptymalizowac kod przy kompilacji.
+         */
+        x[i] = srednia_dana + znak * odchylenie_standardowe_dane;
+        y[i] = srednia_dana + znak * odchylenie_standardowe_dane;
+        z[i] = srednia_dana + znak * odchylenie_standardowe_dane;
     }
 }
 
@@ -111,12 +130,18 @@ void Srednia(){
 
 void OdchylenieStandardowe(){
     float a = 0;
+    // Wykonuje Pan 3*N - 3 niepotrzebnych operacji dzielenia
+    float avg_x = suma_x/N;
+    double avg_y = suma_y/N;
+    long double avg_z = suma_z/N;
 
     for (int i = 0 ; i < N ; i++){
-        odchylenie_standardowe_x += pow(x[i] - suma_x/N , 2);
-        odchylenie_standardowe_y += pow(y[i] - suma_y/N , 2);
-        odchylenie_standardowe_z += pow(z[i] - suma_z/N , 2);
-
+        odchylenie_standardowe_x += pow(x[i] - avg_x , 2);
+        odchylenie_standardowe_y += pow(y[i] - avg_y , 2);
+        // w przypadku kwadratow, jezeli wyrazenie nie jest zbyt rozwlekle
+        // warto zrezygnowac z pow(), rowniez ze wzgledow wydajnosciowych.
+        // Proste mnozenie bedzie szybsze
+        odchylenie_standardowe_z += (z[i] - avg_z)*(z[i] - avg_z);
     }
     
     odchylenie_standardowe_x = sqrt(odchylenie_standardowe_x/N);
