@@ -38,7 +38,7 @@ void GeneratingArray(){
     srand (time(NULL));
 
     int srednia_dana = 1;
-    float odchylenie_standardowe_dane = 0.1;
+    long double odchylenie_standardowe_dane = 0.1;
     int a = 0;
     int b = 0;
     int c = 0;
