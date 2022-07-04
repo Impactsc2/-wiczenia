@@ -35,7 +35,19 @@ void CreatingArray(){
 
 void GeneratingArray(){
 
-    srand (time(NULL));
+  /* Inicjowanie generatora liczb pseudolosowych czasem to bardzo zly pomysl.
+   * To sie zapewne sprawdza w przypadku tworzenia gier itp. ale nie w przypadku
+   * obliczen. 1. W takim przypadku nie jest Pan w stanie powtorzyc symulacji
+   * danej symulacji drugi raz (bo nie zapamaientuje Pan wartosci seed).
+   * 2. Uruchamiajac wiele symulacji jednoszesnie (w celu zebrania statystyki)
+   * na klastrze np., wiele set osobnych runow zleconych do kolejki uruchomi sie
+   * jednoczesnie z tym samym seedem generatora, wiec zamiast 100 roznych symulacji
+   * ma Pan 100 razy te sama. A nawet jesli nie, to generator bedzie inicjowany
+   * wartosciami bardzo bliskimi sobie.
+   *
+   * Generator inicjujemy duzym losowym int'em
+   */
+    srand (780428172);
 
     int srednia_dana = 1;
     long double odchylenie_standardowe_dane = 0.1;
