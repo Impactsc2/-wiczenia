@@ -89,7 +89,7 @@ void Suma(){
     }
 }
 
-void Średnia(){
+void Srednia(){
 
     srednia_x = suma_x/N;
     srednia_y = suma_y/N;
@@ -116,7 +116,7 @@ void OdchylenieStandardowe(){
 void Dane(){
 
     Suma();
-    Średnia();
+    Srednia();
     OdchylenieStandardowe();
 
 }
