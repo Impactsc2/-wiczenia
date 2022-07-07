@@ -2,7 +2,6 @@
 #include <stdlib.h> 
 #include <math.h>
 
-
 using namespace std;
 
 double KahanSumAlghoritm(double array[] , int size){
@@ -56,10 +55,19 @@ double * GeneratingArray(double array[] , int size){
                 stop = 1;
             }
         }
-        sign = (a == 0) ? 1 , c++ : -1 , b++;
-        array[i] = mean_const + sign*standard_deviation_const;
-    }
 
+        if (a == 0){
+            sign = 1;
+            b++;
+        }else{
+            sign = -1;
+            c++;
+        }
+
+        
+        array[i] = mean_const + sign*standard_deviation_const;
+        
+    }
     return array;
 }
 
