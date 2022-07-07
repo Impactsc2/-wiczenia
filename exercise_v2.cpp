@@ -39,26 +39,26 @@ double * GeneratingArray(double array[] , int size){
     int a = 0;
     int b = 0;
     int c = 0;
+    int stop = 0;
+    int sign = 0;
 
     for (int i = 0 ; i < size ; i++){
-
-        a = rand()%2;
-
-        if (b == size/2){
-            a = 1;
+        
+        if (stop == 0){
+            
+            a = rand()%2;
+            
+            if (b == 0.5*size){
+                a = 1;
+                stop = 1;
+            }
+            if (c == 0.5*size){
+                a = 0;
+                stop = 1;
+            }
         }
-        if (c == size/2){
-            a = 0;
-        }
-
-        if ( a == 0){
-            array[i] = mean_const + standard_deviation_const;
-            b++;
-        }
-        else{
-            array[i] = mean_const - standard_deviation_const;
-            c++;
-        }
+        sign = (a == 0) ? 1 , c++ : -1 , b++;
+        array[i] = mean_const + sign*standard_deviation_const;
     }
 
     return array;
