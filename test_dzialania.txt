@@ -1,0 +1,44 @@
+Poprawiony program daje juz oczekiwane wyniki. Tak jak wspominalem, bledy pochodza
+z dwoch zrodel: i. ograniczenia dlugosci zmiennej (na to niewiele mozemy poradzic)
+ii. wykonywania operacji arytmetycznych (na to mozemy juz cos poradzic).
+Po pierwsze, unikamy niepotrzebnych obliczen (to ma rowniez pozytywny wplyw na
+szybkosc dzialania kodu), a konieczne obliczenia mozemy robic w taki sposob
+aby zminimalizowac bledy. Bledy generowane w trakcje dodawania do siebie
+duzej ilosci liczb sa poczesci rownize zwiazane z ograniczeniem wielkosci
+zmiennej (prosze sie zastanowic na czym polega ten blad). Stosowanie
+long double jest w praktyce bardzo upierdliwe i latwo jest po drodze zepsuc
+precyzje zapominajac, ze wszedzie musi byc long double (tak jak Pan w porzedniej
+wersji kodu). Na szczescie sa inne metody poprawiania dokladnosci. Ponizej
+jest output z mojego kodu, w ktorym zastosowalem specjalny algorytm, ktory
+przy dodawaniu duzej ilosci liczb dba o zaokraglenia. Jak widac, dzialajac
+na zmiennych typu double, wynik odchylenia std. jest o dwa rzedzy lepszy niz
+long double. Wykorzystlem to algorymt kahan'a (na wiki znajdzie Pan opis
+i chyba nawet przykladowa implementacje). Prosze sprobowac zastosowac go w
+Pana kodzie.
+
+N=1000000
+ Sums values for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 1.000000375000000000000000000000e+06
+ double precision : 1.000000000000006519258022308350e+06
+ magia :)         : 1.000000000000000000000000000000e+06
+ long double pre. : 1.000000000000000000341060513165e+06
+ accurate value   : 1.000000000000000000000000000000e+06
+
+ Average values for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 1.000000357627868652343750000000e+00
+ double precision : 1.000000000000006439293542825908e+00
+ magia :)         : 1.000000000000000000000000000000e+00
+ long double pre. : 1.000000000000000000325260651746e+00
+ accurate value   : 1.0
+
+ Standard deviation for generated numbers
+                    **....o....|....o....|....o....|
+ single precision : 9.932383149862289428710937500000e-02
+ double precision : 1.000000000008592765388115708447e-01
+ magia :)         : 1.000000000000000471844785465692e-01
+ long double pre. : 9.999999999999938751521922492005e-02
+ accurate value   : 0.1
+
+
