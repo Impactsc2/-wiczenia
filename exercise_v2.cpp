@@ -25,15 +25,7 @@ double KahanSumAlghoritm(double array[] , int size){
     return sum;
 }
 
-void ArrayDuplication(double array1[] , double array2[] , int size){
-
-    for (int i = 0 ; i < size ; i++){
-
-        array1[i] = array2[i];
-    }
-}
-
-double * GeneratingArray(double array[] , int size){
+void GeneratingArray(double array[] , int size){
 
     srand (780428172);
 
@@ -73,7 +65,6 @@ double * GeneratingArray(double array[] , int size){
         array[i] = mean_const + sign*standard_deviation_const;
         
     }
-    return array;
 }
 
 int InputSize(){
@@ -101,7 +92,7 @@ double StandardDeviation(double array[] , int size , double mean){
 
     for (int i = 0 ; i < size ; i++){
 
-        array[i] = pow(array[i] - mean , 2);
+        array[i] = (array[i] - mean)*(array[i] - mean);
     }
      standard_deviation = sqrt(KahanSumAlghoritm(array , size)/size);
     
@@ -128,7 +119,7 @@ int main(){
     
     array = new double[size];
 
-    ArrayDuplication(array , GeneratingArray(array , size) , size);
+    GeneratingArray(array , size)
 
     sum = KahanSumAlghoritm(array , size);
     mean = Mean(sum , size);
