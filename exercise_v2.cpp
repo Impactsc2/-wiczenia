@@ -119,7 +119,7 @@ int main(){
     
     array = new double[size];
 
-    GeneratingArray(array , size)
+    GeneratingArray(array , size);
 
     sum = KahanSumAlghoritm(array , size);
     mean = Mean(sum , size);
