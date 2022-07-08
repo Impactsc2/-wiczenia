@@ -33,22 +33,22 @@ void GeneratingArray(double array[] , int size){
     int a = 0;
     int b = 0;
     int c = 0;
-    int stop = 0;
+    int go_random = 1;
     int sign = 0;
 
     for (int i = 0 ; i < size ; i++){
         
-        if (stop == 0){
+        if (go_random){
             
             a = (int) 2*urand();
             
             if (b == 0.5*size){
                 a = 1;
-                stop = 1;
+                go_random = 0;
             }
             if (c == 0.5*size){
                 a = 0;
-                stop = 1;
+                go_random = 0;
             }
         }
 
@@ -62,6 +62,7 @@ void GeneratingArray(double array[] , int size){
 
         
         array[i] = mean_const + sign*standard_deviation_const;
+       // cout << "i=" << i << " a=" << a << " ar(i)=" << array[i] << endl;
         
     }
 }
