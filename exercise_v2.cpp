@@ -4,6 +4,11 @@
 
 using namespace std;
 
+int urand(){
+
+    return (double) rand() / ((double) RAND_MAX) ;
+}
+
 double KahanSumAlghoritm(double array[] , int size){
 
     double sum = 0.0;
@@ -44,7 +49,7 @@ double * GeneratingArray(double array[] , int size){
         
         if (stop == 0){
             
-            a = rand()%2;
+            a = urand();
             
             if (b == 0.5*size){
                 a = 1;
