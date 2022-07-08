@@ -10,8 +10,8 @@ double urand(){
 
 double KahanSumAlghoritm(double array[] , int size){
 
-    double sum = 0.0;
-    double c = 0.0;
+    double sum = 0;
+    double c = (double) 0;
 
     for (int i = 0 ; i < size ; i++){
         
@@ -28,41 +28,39 @@ void GeneratingArray(double array[] , int size){
 
     srand (780428172);
 
-    const int mean_const = 1;
-    const double standard_deviation_const = 0.1;
-    int a = 0;
-    int b = 0;
-    int c = 0;
-    int stop = 0;
-    int sign = 0;
+    const int MEAN = 1;
+    const double STD_DEV = (double) 1 / (double) 10;
+    int a, sign;
+    int b = 0, c = 0, go_random = 1;
+    int half_size = size / 2;
 
     for (int i = 0 ; i < size ; i++){
         
-        if (stop == 0){
-            
-            a = (int) 2*urand();
-            
-            if (b == 0.5*size){
-                a = 1;
-                stop = 1;
-            }
-            if (c == 0.5*size){
-                a = 0;
-                stop = 1;
-            }
+        if(go_random){
+            a = (int) 2 * urand();
         }
 
-        if (a == 0){
-            sign = 1;
-            b++;
-        }else{
-            sign = -1;
-            c++;
-        }
+        sign = -1 + 2 * a;  // a=0 -> -1 (->c++) || a=1 -> +1 (->b++)
 
+        b += 1 - a;
+
+        c += a;
+
+        if(go_random){
+            // wynik z prawej bedzie 0 gdy b lub c beda rowne polowie size
+            // dlatego sprawdzamy wieksza z nich
+            // Ponizsze jest rownowazne z: zwroc reszte z dzielenia wiekszej
+            // z b i c przez pol rozmiaru tablicy. Jezeli b lub c beda rowne
+            // polowie tablicy wynik bedzie 0 (Uwaga, wynik rozniez moze byc
+            // 0 gdy b i c sa rowne zero, dlatego ten test trzeba przeprowadzic
+            // gdy ktoras z nich jest juz niezerowa)
+            go_random = ((b <= c) ? c : b) % half_size;
+            // nastepnie trzeba przerzucic a na przeciwna wartosc, bo od tej
+            // pory go_random jest 0 i ten kod, ani urand, juz sie nie wykonaja
+            a = (a > 0) ? 0 : 1;
+        }
         
-        array[i] = mean_const + sign*standard_deviation_const;
-        
+        array[i] = MEAN + sign * STD_DEV;
     }
 }
 
@@ -77,25 +75,21 @@ int InputSize(){
 }
 
 double Mean(double sum , int size){
-
-    double mean = 0.0;
-
-    mean = sum/size;
-
-    return mean;
+    return sum / (double) size;
+    // dzielenie double przez int czasem potrafi zrobic psikusa
 }
 
 double StandardDeviation(double array[] , int size , double mean){
 
-    double standard_deviation = 0.0;
+    double *local_array =  new double[size];
 
+    double a;
     for (int i = 0 ; i < size ; i++){
-
-        array[i] = (array[i] - mean)*(array[i] - mean);
+        a = array[i] - mean ;
+        local_array[i] = a * a;
     }
-     standard_deviation = sqrt(KahanSumAlghoritm(array , size)/size);
     
-    return standard_deviation;
+    return sqrt(KahanSumAlghoritm(local_array, size) / (double) size);
 }
 
 void CoutArray(double array[] , int size){
