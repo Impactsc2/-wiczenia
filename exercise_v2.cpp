@@ -61,9 +61,7 @@ void GeneratingArray(double array[] , int size){
         }
         
         array[i] = MEAN + sign * STD_DEV;
-//        cout << "i=" << i << " gr=" << go_random << " a=" << a << " b=" << b << " c=" << c << " s=" << sign << " ar(i)=" << array[i] << endl;
     }
-//     cout << " b=" << b << " c=" << c << endl;
 }
 
 int InputSize(){
@@ -83,12 +81,15 @@ double Mean(double sum , int size){
 
 double StandardDeviation(double array[] , int size , double mean){
 
-    for (int i = 0 ; i < size ; i++){
+    double *local_array =  new double[size];
 
-        array[i] = (array[i] - mean)*(array[i] - mean);
+    double a;
+    for (int i = 0 ; i < size ; i++){
+        a = array[i] - mean ;
+        local_array[i] = a * a;
     }
     
-    return sqrt(KahanSumAlghoritm(array , size)/size);
+    return sqrt(KahanSumAlghoritm(local_array, size) / (double) size);
 }
 
 void CoutArray(double array[] , int size){
