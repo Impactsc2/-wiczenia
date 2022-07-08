@@ -78,25 +78,18 @@ int InputSize(){
 }
 
 double Mean(double sum , int size){
-
-    double mean = 0.0;
-
-    mean = sum/size;
-
-    return mean;
+    return sum / (double) size;
+    // dzielenie double przez int czasem potrafi zrobic psikusa
 }
 
 double StandardDeviation(double array[] , int size , double mean){
-
-    double standard_deviation = 0.0;
 
     for (int i = 0 ; i < size ; i++){
 
         array[i] = (array[i] - mean)*(array[i] - mean);
     }
-     standard_deviation = sqrt(KahanSumAlghoritm(array , size)/size);
     
-    return standard_deviation;
+    return sqrt(KahanSumAlghoritm(array , size)/size);
 }
 
 void CoutArray(double array[] , int size){
