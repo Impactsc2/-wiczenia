@@ -10,8 +10,8 @@ double urand(){
 
 double KahanSumAlghoritm(double array[] , int size){
 
-    double sum = 0.0;
-    double c = 0.0;
+    double sum = 0;
+    double c = (double) 0;
 
     for (int i = 0 ; i < size ; i++){
         
@@ -29,7 +29,7 @@ void GeneratingArray(double array[] , int size){
     srand (780428172);
 
     const int mean_const = 1;
-    const double standard_deviation_const = 0.1;
+    const double standard_deviation_const = (double) 1 / (double) 10;
     int a = 0;
     int b = 0;
     int c = 0;
@@ -62,7 +62,7 @@ void GeneratingArray(double array[] , int size){
 
         
         array[i] = mean_const + sign*standard_deviation_const;
-       // cout << "i=" << i << " a=" << a << " ar(i)=" << array[i] << endl;
+       cout << "i=" << i << " a=" << a << " ar(i)=" << array[i] << endl;
         
     }
 }
