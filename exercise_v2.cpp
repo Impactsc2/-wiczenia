@@ -28,43 +28,42 @@ void GeneratingArray(double array[] , int size){
 
     srand (780428172);
 
-    const int mean_const = 1;
-    const double standard_deviation_const = (double) 1 / (double) 10;
-    int a = 0;
-    int b = 0;
-    int c = 0;
-    int go_random = 1;
-    int sign = 0;
+    const int MEAN = 1;
+    const double STD_DEV = (double) 1 / (double) 10;
+    int a, sign;
+    int b = 0, c = 0, go_random = 1;
+    int half_size = size / 2;
 
     for (int i = 0 ; i < size ; i++){
         
-        if (go_random){
-            
-            a = (int) 2*urand();
-            
-            if (b == 0.5*size){
-                a = 1;
-                go_random = 0;
-            }
-            if (c == 0.5*size){
-                a = 0;
-                go_random = 0;
-            }
+        if(go_random){
+            a = (int) 2 * urand();
         }
 
-        if (a == 0){
-            sign = 1;
-            b++;
-        }else{
-            sign = -1;
-            c++;
-        }
+        sign = -1 + 2 * a;  // a=0 -> -1 (->c++) || a=1 -> +1 (->b++)
 
+        b += 1 - a;
+
+        c += a;
+
+        if(go_random){
+            // wynik z prawej bedzie 0 gdy b lub c beda rowne polowie size
+            // dlatego sprawdzamy wieksza z nich
+            // Ponizsze jest rownowazne z: zwroc reszte z dzielenia wiekszej
+            // z b i c przez pol rozmiaru tablicy. Jezeli b lub c beda rowne
+            // polowie tablicy wynik bedzie 0 (Uwaga, wynik rozniez moze byc
+            // 0 gdy b i c sa rowne zero, dlatego ten test trzeba przeprowadzic
+            // gdy ktoras z nich jest juz niezerowa)
+            go_random = ((b <= c) ? c : b) % half_size;
+            // nastepnie trzeba przerzucic a na przeciwna wartosc, bo od tej
+            // pory go_random jest 0 i ten kod, ani urand, juz sie nie wykonaja
+            a = (a > 0) ? 0 : 1;
+        }
         
-        array[i] = mean_const + sign*standard_deviation_const;
-       cout << "i=" << i << " a=" << a << " ar(i)=" << array[i] << endl;
-        
+        array[i] = MEAN + sign * STD_DEV;
+//        cout << "i=" << i << " gr=" << go_random << " a=" << a << " b=" << b << " c=" << c << " s=" << sign << " ar(i)=" << array[i] << endl;
     }
+//     cout << " b=" << b << " c=" << c << endl;
 }
 
 int InputSize(){
