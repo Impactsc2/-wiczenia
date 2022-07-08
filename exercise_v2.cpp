@@ -30,7 +30,7 @@ void ArrayDuplication(double array1[] , double array2[] , int size){
 
 double * GeneratingArray(double array[] , int size){
 
-    srand (time(NULL));
+    srand (780428172);
 
     const int mean_const = 1;
     const double standard_deviation_const = 0.1;
