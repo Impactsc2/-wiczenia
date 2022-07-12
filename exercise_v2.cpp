@@ -4,14 +4,15 @@
 
 using namespace std;
 
+
 double urand(){
     return ((double) rand() / (double) RAND_MAX);
 }
 
 double KahanSumAlghoritm(double array[] , int size){
 
-    double sum = 0.0;
-    double c = 0.0;
+    double sum = 0;
+    double c = (double)0;
 
     for (int i = 0 ; i < size ; i++){
         
@@ -25,43 +26,35 @@ double KahanSumAlghoritm(double array[] , int size){
 }
 
 void GeneratingArray(double array[] , int size){
-
+    
     srand (780428172);
 
-    const int mean_const = 1;
-    const double standard_deviation_const = 0.1;
-    int a = 0;
-    int b = 0;
-    int c = 0;
-    int stop = 0;
-    int sign = 0;
+    const int MEAN = 1;
+    const double STD_DEV = (double) 1 / (double) 10;
+    int a, sign;
+    int b = 0, c = 0, go_random = 1;
+    int half_size = (double) size / (double) 2;
 
     for (int i = 0 ; i < size ; i++){
         
-        if (stop == 0){
-            
-            a = (int) 2*urand();
-            
-            if (b == 0.5*size){
-                a = 1;
-                stop = 1;
-            }
-            if (c == 0.5*size){
-                a = 0;
-                stop = 1;
-            }
+        if (go_random){           
+            a = (int) 2 * urand();
         }
-
-        if (a == 0){
-            sign = 1;
-            b++;
-        }else{
-            sign = -1;
-            c++;
-        }
-
         
-        array[i] = mean_const + sign*standard_deviation_const;
+        sign = -1 + 2 * a; 
+
+        b += 1 - a;
+
+        c += a;
+
+        if(go_random){
+
+            go_random = ((b <= c) ? c : b) % half_size;
+
+            a = (a > 0) ? 0 : 1;
+        }
+
+        array[i] = MEAN + sign * STD_DEV;
         
     }
 }
@@ -80,22 +73,25 @@ double Mean(double sum , int size){
 
     double mean = 0.0;
 
-    mean = sum/size;
+    mean = sum / (double) size;
 
     return mean;
 }
 
 double StandardDeviation(double array[] , int size , double mean){
 
-    double standard_deviation = 0.0;
+    double *local_array =  new double[size];
+
+    double a;
 
     for (int i = 0 ; i < size ; i++){
 
-        array[i] = (array[i] - mean)*(array[i] - mean);
+        a = (array[i] - mean);
+        local_array[i] = a*a;
     }
-     standard_deviation = sqrt(KahanSumAlghoritm(array , size)/size);
+     
     
-    return standard_deviation;
+    return sqrt(KahanSumAlghoritm(local_array , size) / (double) size);
 }
 
 void CoutArray(double array[] , int size){
@@ -123,7 +119,7 @@ int main(){
     sum = KahanSumAlghoritm(array , size);
     mean = Mean(sum , size);
     standard_deviation = StandardDeviation(array , size , mean);
-
+    CoutArray(array, size);
     cout.precision(30);
     cout << fixed << sum << endl;
     cout << fixed << mean << endl;
