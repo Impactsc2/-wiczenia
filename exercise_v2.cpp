@@ -38,7 +38,7 @@ void GeneratingArray(double array[] , int size){
     for (int i = 0 ; i < size ; i++){
         
         if (go_random){           
-            a = (int) 2 * urand();
+            a = rand()%2;
         }
         
         sign = -1 + 2 * a; 
@@ -119,7 +119,7 @@ int main(){
     sum = KahanSumAlghoritm(array , size);
     mean = Mean(sum , size);
     standard_deviation = StandardDeviation(array , size , mean);
-    CoutArray(array, size);
+    
     cout.precision(30);
     cout << fixed << sum << endl;
     cout << fixed << mean << endl;
